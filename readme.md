@@ -21,7 +21,7 @@ Install backend with python
 #### Windows
 ```bash
   python -m venv venv
-  source venv/Scripts/activate
+  ./venv/Scripts/activate
   pip install -r requirements.txt
   python server.py  
 ```
