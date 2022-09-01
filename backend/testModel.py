@@ -5,51 +5,6 @@ from tensorflow.keras.datasets import mnist
 
 STORE_PATH = './models'
 
-def run_simple_graph():
-    # create TensorFlow variables
-    const = tf.Variable(2.0, name="const")
-    b = tf.Variable(2.0, name='b')
-    c = tf.Variable(1.0, name='c')
-
-    # now create some operations
-    d = tf.add(b, c, name='d')
-    e = tf.add(c, const, name='e')
-    a = tf.multiply(d, e, name='a')
-
-    # alternatively (and more naturally)
-    d = b + c
-    e = c + 2
-    a = d * e
-
-    print(f"Variable a is {a.numpy()}")
-
-
-def run_simple_graph_multiple():
-    const = tf.Variable(2.0, name="const")
-    b = tf.Variable(np.arange(0, 10), name='b')
-    c = tf.Variable(1.0, name='c')
-
-    d = tf.cast(b, tf.float32) + c
-    e = c + const
-    a = d * e
-
-    print(f"Variable a is {a.numpy()}")
-
-    # the line below would cause an error - tensors are immutable
-    # b[1] = 10
-
-    # need to use assignment instead
-    b[1].assign(10)
-    d = tf.cast(b, tf.float32) + c
-    e = c + const
-    a = d * e
-    print(f"Variable a is {a.numpy()}")
-
-    b[6:9].assign([10, 10, 10])
-    f = b[2:5]
-    print(f.numpy())
-
-
 def get_batch(x_data, y_data, batch_size):
     idxs = np.random.randint(0, len(y_data), batch_size)
     return x_data[idxs,:,:], y_data[idxs]
@@ -124,6 +79,4 @@ def nn_example():
     print("\nTraining complete!")
 
 if __name__ == "__main__":
-    # run_simple_graph()
-    # run_simple_graph_multiple()
     nn_example()
