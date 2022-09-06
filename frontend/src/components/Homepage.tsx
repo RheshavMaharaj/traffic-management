@@ -1,5 +1,4 @@
 import logo from '../imgs/logo1.png'
-import Button from './Button'
 
 const homepage = () => {
   return (
@@ -7,8 +6,8 @@ const homepage = () => {
       <div className="container">
         <div className="hero">
           <header>
-            <a href="#">
-              <img src={logo} alt="" className="logo" />
+            <a href="#" aria-label="openroad logo">
+              <img src={logo} alt="openroad logo" className="logo" />
             </a>
           </header>
           <h1 className="hero-h1">
@@ -19,21 +18,17 @@ const homepage = () => {
             Engineering Studio Project
           </p>
           <div className="hero-links">
-            <Button
-              href={'#'}
-              className={'hero-getStarted'}
-              text={'Get Started'}
-            />
+            <a href="#section-search" className="hero-getStarted">
+              Get Started
+            </a>
 
-            <Button
-              href={'#'}
-              className={'hero-findOutHow'}
-              text={'Find out how'}
-            />
+            <a href="#" className="hero-findOutHow">
+              Find out how
+            </a>
           </div>
         </div>
 
-        <div className="section-search">
+        <div className="section-search" id="section-search">
           <div className="search-container">
             <div className="search-inner-container">
               <div className="search-input">
@@ -78,11 +73,9 @@ const homepage = () => {
                 </div>
               </div>
 
-              <Button
-                href={'#'}
-                className={'view-congestion-map'}
-                text={'View Congestion Map'}
-              />
+              <a href="#" className="view-congestion-map">
+                View Congestion Map
+              </a>
             </div>
           </div>
         </div>
