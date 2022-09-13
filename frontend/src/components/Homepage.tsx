@@ -1,4 +1,6 @@
 import logo from '../imgs/logo1.png'
+import '../css/Homepage.css'
+import { Link } from 'react-router-dom'
 
 const homepage = () => {
   return (
@@ -6,9 +8,9 @@ const homepage = () => {
       <div className="container">
         <div className="hero">
           <header>
-            <a href="#" aria-label="openroad logo">
+            <Link to={'/'} aria-label="openroad logo">
               <img src={logo} alt="openroad logo" className="logo" />
-            </a>
+            </Link>
           </header>
           <h1 className="hero-h1">
             Traffic Congestion Prediction Using Powerful AI
@@ -22,9 +24,9 @@ const homepage = () => {
               Get Started
             </a>
 
-            <a href="#" className="hero-findOutHow">
+            <Link to={'/find-out-more'} className="hero-findOutHow">
               Find out how
-            </a>
+            </Link>
           </div>
         </div>
 
@@ -73,9 +75,9 @@ const homepage = () => {
                 </div>
               </div>
 
-              <a href="#" className="view-congestion-map">
+              <Link to={'view-congestion-map'} className="view-congestion-map">
                 View Congestion Map
-              </a>
+              </Link>
             </div>
           </div>
         </div>
