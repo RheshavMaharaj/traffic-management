@@ -1,6 +1,6 @@
-import logo from '../imgs/logo1.png'
-import '../css/Homepage.css'
-import { Link } from 'react-router-dom'
+import logo from "../imgs/logo1.png"
+import "../css/Homepage.css"
+import { Link } from "react-router-dom"
 
 const homepage = () => {
   return (
@@ -8,7 +8,7 @@ const homepage = () => {
       <div className="container">
         <div className="hero">
           <header>
-            <Link to={'/'} aria-label="openroad logo">
+            <Link to={"/"} aria-label="openroad logo">
               <img src={logo} alt="openroad logo" className="logo" />
             </Link>
           </header>
@@ -24,7 +24,7 @@ const homepage = () => {
               Get Started
             </a>
 
-            <Link to={'/find-out-more'} className="hero-findOutHow">
+            <Link to={"/find-out-more"} className="hero-findOutHow">
               Find out how
             </Link>
           </div>
@@ -75,7 +75,7 @@ const homepage = () => {
                 </div>
               </div>
 
-              <Link to={'view-congestion-map'} className="view-congestion-map">
+              <Link to={"view_congestion"} className="view-congestion-map">
                 View Congestion Map
               </Link>
             </div>
