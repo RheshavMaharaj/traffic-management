@@ -21,6 +21,12 @@ html {
   margin: 0 auto;
 }
 
+/* Map */
+.map-container {
+  width: 100%;
+  height: 100vh;
+}
+
 .section-hero {
   background-color: var(--secondary-colour);
   background-image: url('./imgs/landing-bg.png');

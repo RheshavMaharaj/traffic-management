@@ -1,4 +1,5 @@
 import logo from '../imgs/logo1.png'
+import Map from './Map'
 
 const homepage = () => {
   return (
@@ -86,6 +87,7 @@ const homepage = () => {
           <p>Build for 41129 Software Innovation Studio by Team 9</p>
         </div>
       </footer>
+      <Map />
     </section>
   )
 }
