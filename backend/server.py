@@ -1,5 +1,6 @@
 from flask import Flask, request
 import csv
+import model
 
 app = Flask(__name__)
 
@@ -24,6 +25,20 @@ def get_stations():
   with open('./datasets/road_traffic_counts_station_reference.csv', newline='') as csvfile:
     reader = csv.DictReader(csvfile)
     return list(reader)
+
+@app.route('/classify',methods=['POST','GET'])
+def classify_type():
+    try:
+        sepal_len = request.args.get('slen') 
+        sepal_wid = request.args.get('swid') 
+        petal_len = request.args.get('plen') 
+        petal_wid = request.args.get('pwid') 
+
+        variety = model.classify(sepal_len, sepal_wid, petal_len, petal_wid)
+
+        return {'Result': variety}
+    except:
+        return 'Error'
 
 
 
