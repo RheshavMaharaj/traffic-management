@@ -5,15 +5,15 @@ function Map() {
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: "AIzaSyBuHjFvheL-aNtEzct67_ZblEegI_xRghk",
   });
-  const center = useMemo(() => ({ lat: -33.85649, lng: 151.215419 }), []);
+  const center = useMemo(() => ({ 'lat': -33.81263, 'lng': 151.110436 }), []);
   const [stations, setStations] = useState([]);
 
   useEffect(() => {
-    fetch('/stations')
+    fetch(`/stations?longitude=${center.lng}&latitude=${center.lat}&radius=${5}`)
       .then((response) => response.json())
       .then((data) => setStations(data));
 
-  }, []);
+  }, [center.lat, center.lng]);
 
   if (!isLoaded) {
     return (

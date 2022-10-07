@@ -22,13 +22,14 @@ def get_stations():
   args = request.args
   latitude = args.get('latitude')
   longitude = args.get('longitude')
+  radius = args.get('radius')
 
   with open('./datasets/road_traffic_counts_station_reference.csv', newline='') as csvfile:
     reader = csv.DictReader(csvfile)
     stations_list = list(reader)
 
-    center_point = [{ 'lat': -33.85649, 'lng': 151.215419 }]
-    radius = 2 # in kilometer
+    center_point = [{ 'lat': float(latitude), 'lng': float(longitude) }]
+    radius = float(radius)
 
     close_stations = stations.get_stations(center_point, stations_list, radius)
     return close_stations
