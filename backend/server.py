@@ -1,6 +1,7 @@
 from flask import Flask, request
 import csv
 import model
+import stations
 
 app = Flask(__name__)
 
@@ -24,7 +25,13 @@ def get_stations():
 
   with open('./datasets/road_traffic_counts_station_reference.csv', newline='') as csvfile:
     reader = csv.DictReader(csvfile)
-    return list(reader)
+    stations_list = list(reader)
+
+    center_point = [{ 'lat': -33.85649, 'lng': 151.215419 }]
+    radius = 2 # in kilometer
+
+    close_stations = stations.get_stations(center_point, stations_list, radius)
+    return close_stations
 
 @app.route('/classify',methods=['POST','GET'])
 def classify_type():

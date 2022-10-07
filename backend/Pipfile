@@ -15,6 +15,7 @@ zipp = "==3.8.1"
 numpy = "*"
 sklearn = "*"
 pandas = "*"
+geopy = "*"
 
 [dev-packages]
 

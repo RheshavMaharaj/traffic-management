@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "549fc7b2af1e67c380ea50363bf225134eb68b8c13a777820328027145012fa8"
+            "sha256": "2bb4424c59ebb381d4b4a5dd22d5c0b9d2c0b7a30acfcb5449266427d77bca5b"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -39,6 +39,21 @@
             ],
             "index": "pypi",
             "version": "==2.2.2"
+        },
+        "geographiclib": {
+            "hashes": [
+                "sha256:8f441c527b0b8a26cd96c965565ff0513d1e4d9952b704bf449409e5015c77b7",
+                "sha256:ac400d672b8954b0306bca890b088bb8ba2a757dc8133cca0b878f34b33b2740"
+            ],
+            "version": "==1.52"
+        },
+        "geopy": {
+            "hashes": [
+                "sha256:58b7edf526b8c32e33126570b5f4fcdfaa29d4416506064777ae8d84cd103fdd",
+                "sha256:8f1f949082b964385de61fcc3a667a6a9a6e242beb1ae8972449f164b2ba0e89"
+            ],
+            "index": "pypi",
+            "version": "==2.2.0"
         },
         "importlib-metadata": {
             "hashes": [
@@ -195,10 +210,10 @@
         },
         "pytz": {
             "hashes": [
-                "sha256:220f481bdafa09c3955dfbdddb7b57780e9a94f5127e35456a48589b9e0c0197",
-                "sha256:cea221417204f2d1a2aa03ddae3e867921971d0d76f14d87abb4414415bbdcf5"
+                "sha256:2c0784747071402c6e99f0bafdb7da0fa22645f06554c7ae06bf6358897e9c91",
+                "sha256:48ce799d83b6f8aab2020e369b627446696619e79645419610b9facd909b3174"
             ],
-            "version": "==2022.2.1"
+            "version": "==2022.4"
         },
         "scikit-learn": {
             "hashes": [
