@@ -1,0 +1,20 @@
+/******************************* Saved Congestion Points *******************************/
+
+.savedcongestion {
+  background-color: #f7f7f7;
+  min-width: 96.2vw;
+  height: 100vh;
+  padding: 1rem;
+  overflow-y: scroll;
+}
+
+.savedcongestion h1 {
+  color: var(--primary-colour);
+}
+
+.sc-cards {
+  margin-top: 2rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
