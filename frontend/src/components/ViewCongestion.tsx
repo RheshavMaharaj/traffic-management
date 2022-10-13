@@ -5,10 +5,11 @@ import Search from "./Search"
 import Poi from "./Poi"
 import SavedCongestion from "./SavedCongestion"
 import { Link } from "react-router-dom"
-import { useState } from "react"
+import React, { useContext, useState } from "react"
 import "../css/Sidebar.css"
-import Modal from "./Modal"
 import Map from "./Map"
+import Modal from "./Modal"
+import { GlobalContext } from "../context/GlobalState"
 
 const ViewCongestion = () => {
   const [showSearch, setShowSearch] = useState(false)
@@ -16,26 +17,27 @@ const ViewCongestion = () => {
   const [showStar, setShowStar] = useState(false)
   const [showShow, setShowShow] = useState(false)
 
-  function showSidebar(e: any) {
-    if (e.target.id === "icon-search") {
+  const { showModal } = useContext(GlobalContext)
+
+  function showSidebar(e: React.MouseEvent) {
+    const target = e.target as HTMLInputElement;
+    if (target && target.id === "icon-search") {
       setShowSearch(true)
       setShowAlert(false)
       setShowStar(false)
       setShowShow(true)
-    } else if (e.target.id === "icon-alert") {
+    } else if (target && target.id === "icon-alert") {
       setShowSearch(false)
       setShowAlert(true)
       setShowStar(false)
       setShowShow(true)
-    } else if (e.target.id === "icon-star") {
+    } else if (target && target.id === "icon-star") {
       setShowSearch(false)
       setShowAlert(false)
       setShowStar(true)
       setShowShow(true)
     }
   }
-
-  const [showModal, setShowModal] = useState(false)
 
   return (
     <div className="vc">
@@ -91,7 +93,7 @@ const ViewCongestion = () => {
         </div>
         <Map />
       </div>
-      {/* <Modal /> */}
+      {showModal && <Modal congestion={showModal} />}
     </div>
   )
 }
