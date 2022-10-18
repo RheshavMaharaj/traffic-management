@@ -1,5 +1,3 @@
-from ast import IsNot
-from asyncio.windows_events import NULL
 from geopy import distance
 import numpy as np
 
