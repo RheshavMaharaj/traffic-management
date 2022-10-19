@@ -1,8 +1,88 @@
-import logo from '../imgs/logo1.png'
+import logo from '../imgs/logo1.png';
 import '../css/Homepage.css'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { useContext, useState } from 'react'
+import { GlobalContext } from '../context/GlobalState'
+// import PlacesAutoComplete from './PlacesAutoComplete'
+//////
 
-const homepage = () => {
+// import React, { useMemo, useContext } from 'react'
+import { useLoadScript } from '@react-google-maps/api'
+import usePlacesAutocomplete, {
+  getGeocode,
+  getLatLng,
+} from 'use-places-autocomplete'
+
+import {
+  Combobox,
+  ComboboxInput,
+  ComboboxPopover,
+  ComboboxList,
+  ComboboxOption,
+} from '@reach/combobox'
+import '@reach/combobox/styles.css'
+
+/////
+
+export interface LatLng {
+  latitude: number;
+  longitude: number;
+}
+
+const Homepage = () => {
+  let nagivate = useNavigate()
+
+  function routeChange() {
+    nagivate('/view_congestion')
+  }
+  const { handleSearch, setCenter, setRadius } = useContext(GlobalContext)
+
+  // eslint-disable-next-line
+  const [address, setAddress] = useState('15 Broadway, Ultimo NSW 2007')
+  const [searchRadius, setSearchRadius] = useState(1)
+  const [populationDensity, setPopulationDensity] = useState(0)
+  const [timeOfDay, SetTimeOfDay] = useState(0)
+  const [all, setAll] = useState(false)
+  const [intersections, setIntersections] = useState(false)
+  const [speedZones, setSpeedZones] = useState(false)
+  const [highways, setHighways] = useState(false)
+  const [coordinates, setCoordinates] = useState<LatLng>();
+
+  function handleSubmit(e: React.FormEvent) {
+    e.preventDefault()
+
+    if (coordinates && searchRadius > 0) {
+      handleSearch(
+        {
+          latitude: coordinates?.latitude,
+          longitude: coordinates?.longitude,
+          radius: searchRadius,
+        }
+      )
+      setCenter(coordinates)
+      setRadius(searchRadius);
+      routeChange()
+    }
+
+  }
+
+  // eslint-disable-next-line
+  const [_, setSelected] = useState<{lat: number, lng: number}>();
+
+  // TODO: Move this into a useEffect
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: 'AIzaSyBuHjFvheL-aNtEzct67_ZblEegI_xRghk',
+    libraries: ['places'],
+  })
+
+  if (!isLoaded) {
+    return (
+      <div>
+        <h1>loading...</h1>
+      </div>
+    )
+  }
+
   return (
     <section className="section-hero">
       <div className="container">
@@ -32,53 +112,110 @@ const homepage = () => {
 
         <div className="section-search" id="section-search">
           <div className="search-container">
-            <div className="search-inner-container">
-              <div className="search-input">
-                <label htmlFor="point-of-interest">Point of Interest</label>
-                <input type="text" placeholder="15 Broadway, Ultimo NSW 2007" />
-              </div>
+            <form onSubmit={handleSubmit}>
+              <div className="search-inner-container">
+                <div className="search-input">
+                  <label htmlFor="point-of-interest">Point of Interest</label>
+                  {/* <input
+                    type="text"
+                    placeholder={address}
+                    onChange={(e) => setAddress(e.target.value)}
+                    required
+                  /> */}
+                  {/* <div className="places-container"> */}
+                  <PlacesAutoComplete
+                    setSelected={setSelected}
+                    setCoordinates={setCoordinates}
+                    setAddress={setAddress}
+                  />
+                  {/* </div> */}
+                </div>
 
-              <div className="search-filter">
-                <div className="search-filter-item">
-                  <label htmlFor="search-radius">Search Radius (km)</label>
-                  <input type="range" min="5" max="25" step="5" />
+                <div className="search-filter">
+                  <div className="search-filter-item">
+                    <label htmlFor="search-radius">Search Radius (km)</label>
+                    <input
+                      type="range"
+                      min="1"
+                      max="10"
+                      step="1"
+                      value={searchRadius}
+                      onChange={(e) => setSearchRadius(parseInt(e.target.value))}
+                    />
+                  </div>
+                  <div className="search-filter-item">
+                    <label htmlFor="population-density">
+                      Population Density
+                    </label>
+                    <input
+                      type="range"
+                      min="1"
+                      max="3"
+                      step="1"
+                      value={populationDensity}
+                      onChange={(e) => setPopulationDensity(parseInt(e.target.value))}
+                    />
+                  </div>
+                  <div className="search-filter-item">
+                    <label htmlFor="time-of-day">Time of Day</label>
+                    <input
+                      type="range"
+                      min="1"
+                      max="9"
+                      step="1"
+                      value={timeOfDay}
+                      onChange={(e) => SetTimeOfDay(parseInt(e.target.value))}
+                    />
+                  </div>
                 </div>
-                <div className="search-filter-item">
-                  <label htmlFor="population-density">Population Density</label>
-                  <input type="range" min="1" max="3" step="1" />
-                </div>
-                <div className="search-filter-item">
-                  <label htmlFor="time-of-day">Time of Day</label>
-                  <input type="range" min="1" max="9" step="1" />
-                </div>
-              </div>
 
-              <div className="search-sidebar">
-                <label htmlFor="show" className="title">
-                  Show
-                </label>
-                <div className="search-sidebar-item">
-                  <input type="checkbox" name="all" />
-                  <label htmlFor="all">All</label>
+                <div className="search-sidebar">
+                  <label htmlFor="show" className="title">
+                    Show
+                  </label>
+                  <div className="search-sidebar-item">
+                    <input
+                      type="checkbox"
+                      value={all ? 'Yes' : 'No'}
+                      onChange={(e) => setAll(e.currentTarget.checked)}
+                    />
+                    <label htmlFor="all">All</label>
+                  </div>
+                  <div className="search-sidebar-item">
+                    <input
+                      type="checkbox"
+                      value={intersections ? 'Yes' : 'No'}
+                      onChange={(e) =>
+                        setIntersections(e.currentTarget.checked)
+                      }
+                    />
+                    <label htmlFor="intersections">Intersections</label>
+                  </div>
+                  <div className="search-sidebar-item">
+                    <input
+                      type="checkbox"
+                      value={speedZones ? 'Yes' : 'No'}
+                      onChange={(e) => setSpeedZones(e.currentTarget.checked)}
+                    />
+                    <label htmlFor="speed-zones">Speed Zones</label>
+                  </div>
+                  <div className="search-sidebar-item">
+                    <input
+                      type="checkbox"
+                      value={highways ? 'Yes' : 'No'}
+                      onChange={(e) => setHighways(e.currentTarget.checked)}
+                    />
+                    <label htmlFor="highways">Highways</label>
+                  </div>
                 </div>
-                <div className="search-sidebar-item">
-                  <input type="checkbox" name="intersections" />
-                  <label htmlFor="intersections">Intersections</label>
-                </div>
-                <div className="search-sidebar-item">
-                  <input type="checkbox" name="speed-zones" />
-                  <label htmlFor="speed-zones">Speed Zones</label>
-                </div>
-                <div className="search-sidebar-item">
-                  <input type="checkbox" name="highways" />
-                  <label htmlFor="highways">Highways</label>
-                </div>
-              </div>
 
-              <Link to={'view-congestion-map'} className="view-congestion-map">
-                View Congestion Map
-              </Link>
-            </div>
+                <input
+                  type="submit"
+                  value={'View Congestion Map'}
+                  className="view-congestion-map"
+                />
+              </div>
+            </form>
           </div>
         </div>
       </div>
@@ -92,4 +229,54 @@ const homepage = () => {
   )
 }
 
-export default homepage
+export interface PlacesAutoCompleteProps {
+  setSelected: (coords: {lat: number, lng: number}) => void;
+  setCoordinates: (coords: LatLng) => void;
+  setAddress: (address: string) => void;
+}
+
+const PlacesAutoComplete = ({ setSelected, setCoordinates, setAddress }: PlacesAutoCompleteProps) => {
+  const {
+    ready,
+    value,
+    setValue,
+    suggestions: { status, data },
+    clearSuggestions,
+  } = usePlacesAutocomplete()
+
+  const handleSelect = async (address: string) => {
+    setValue(address, false)
+    setAddress(address)
+    clearSuggestions()
+
+    const results = await getGeocode({ address })
+    const { lat, lng } = await getLatLng(results[0])
+    console.log(lat, ' ', lng)
+    setCoordinates({latitude: lat, longitude: lng});
+    setSelected({ lat, lng })
+  }
+
+  return (
+    <Combobox onSelect={handleSelect}>
+      <ComboboxInput
+        value={value}
+        onChange={(e) => {
+          setValue(e.target.value)
+        }}
+        disabled={!ready}
+        className="combobox-input"
+        placeholder="15 Broadway, Ultimo NSW 2007"
+      />
+      <ComboboxPopover>
+        <ComboboxList>
+          {status === 'OK' &&
+            data.map(({ place_id, description }) => (
+              <ComboboxOption key={place_id} value={description} />
+            ))}
+        </ComboboxList>
+      </ComboboxPopover>
+    </Combobox>
+  )
+}
+
+export default Homepage
