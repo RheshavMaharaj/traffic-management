@@ -1,4 +1,4 @@
-import logo from '../imgs/logo1.png'
+import logo from '../imgs/logo1.png';
 import '../css/Homepage.css'
 import { Link, useNavigate } from 'react-router-dom'
 import { useContext, useState } from 'react'
@@ -24,72 +24,50 @@ import '@reach/combobox/styles.css'
 
 /////
 
+export interface LatLng {
+  latitude: number;
+  longitude: number;
+}
+
 const Homepage = () => {
   let nagivate = useNavigate()
 
   function routeChange() {
     nagivate('/view_congestion')
   }
-  const { handleSearch } = useContext(GlobalContext)
+  const { handleSearch, setCenter, setRadius } = useContext(GlobalContext)
 
+  // eslint-disable-next-line
   const [address, setAddress] = useState('15 Broadway, Ultimo NSW 2007')
-  const [searchRadius, setSearchRadius] = useState(0)
+  const [searchRadius, setSearchRadius] = useState(1)
   const [populationDensity, setPopulationDensity] = useState(0)
   const [timeOfDay, SetTimeOfDay] = useState(0)
   const [all, setAll] = useState(false)
   const [intersections, setIntersections] = useState(false)
   const [speedZones, setSpeedZones] = useState(false)
   const [highways, setHighways] = useState(false)
-  const [coordinates, setCoordinates] = useState([])
-
-  function newSearch(
-    address: string,
-    searchRadius: number,
-    populationDensity: number,
-    timeOfDay: number,
-    all: boolean,
-    intersections: boolean,
-    speedZones: boolean,
-    highways: boolean,
-    coordinates: never[]
-  ) {
-    return {
-      address: address,
-      searchRadius: searchRadius,
-      populationDensity: populationDensity,
-      timeOfDay: timeOfDay,
-      all: all,
-      intersections: intersections,
-      speedZones: speedZones,
-      highways: highways,
-      coordinates: coordinates,
-    }
-  }
+  const [coordinates, setCoordinates] = useState<LatLng>();
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
 
-    handleSearch(
-      newSearch(
-        address,
-        searchRadius,
-        populationDensity,
-        timeOfDay,
-        all,
-        intersections,
-        speedZones,
-        highways,
-        coordinates
+    if (coordinates && searchRadius > 0) {
+      handleSearch(
+        {
+          latitude: coordinates?.latitude,
+          longitude: coordinates?.longitude,
+          radius: searchRadius,
+        }
       )
-    )
+      setCenter(coordinates)
+      setRadius(searchRadius);
+      routeChange()
+    }
 
-    routeChange()
   }
 
-  //////////////////////
-
   // eslint-disable-next-line
-  const [selected, setSelected] = useState(null)
+  const [_, setSelected] = useState<{lat: number, lng: number}>();
 
   // TODO: Move this into a useEffect
   const { isLoaded } = useLoadScript({
@@ -104,8 +82,6 @@ const Homepage = () => {
       </div>
     )
   }
-
-  //////////////////////
 
   return (
     <section className="section-hero">
@@ -160,9 +136,9 @@ const Homepage = () => {
                     <label htmlFor="search-radius">Search Radius (km)</label>
                     <input
                       type="range"
-                      min="5"
-                      max="25"
-                      step="5"
+                      min="1"
+                      max="10"
+                      step="1"
                       value={searchRadius}
                       onChange={(e) => setSearchRadius(parseInt(e.target.value))}
                     />
@@ -253,7 +229,13 @@ const Homepage = () => {
   )
 }
 
-const PlacesAutoComplete = ({ setSelected, setCoordinates, setAddress }: any) => {
+export interface PlacesAutoCompleteProps {
+  setSelected: (coords: {lat: number, lng: number}) => void;
+  setCoordinates: (coords: LatLng) => void;
+  setAddress: (address: string) => void;
+}
+
+const PlacesAutoComplete = ({ setSelected, setCoordinates, setAddress }: PlacesAutoCompleteProps) => {
   const {
     ready,
     value,
@@ -270,7 +252,7 @@ const PlacesAutoComplete = ({ setSelected, setCoordinates, setAddress }: any) =>
     const results = await getGeocode({ address })
     const { lat, lng } = await getLatLng(results[0])
     console.log(lat, ' ', lng)
-    setCoordinates([lat, lng])
+    setCoordinates({latitude: lat, longitude: lng});
     setSelected({ lat, lng })
   }
 

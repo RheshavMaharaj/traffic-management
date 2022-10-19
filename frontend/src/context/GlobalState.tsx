@@ -1,14 +1,34 @@
 import { createContext, useReducer, useState } from 'react'
 import Reducer from './Reducer'
-// import Data from './Data'
-import axios from 'axios'
+import { LatLng } from '../components/Homepage';
+
+export interface Congestion {
+  address: string;
+  stationKey: number;
+  stationName: string;
+  latitude: number;
+  longitude: number;
+  radius: number;
+  isSaved: boolean;
+  threshold: number;
+}
+
+export type CongestionQuery = Pick<Congestion, "latitude" | "longitude" | "radius">; 
 
 //global context
-// TODO RM: Update the type
 export const GlobalContext = createContext({
-  handleSearch: (data: any) => {},
+  showModal: false,
+  congestions: [] as Congestion[],
+  center: {} as LatLng,
+  radius: 1,
+  handleSearch: (data: CongestionQuery) => {},
   setShowModal: (status: boolean) => {},
-} as any)
+  handleDismiss: (id: number) => {},
+  handleView: (conjestion: CongestionQuery) => {},
+  handleSaved: (id: number) => {},
+  setCenter: (coords: LatLng) => {},
+  setRadius: (radius: number) => {},
+})
 
 export interface ProviderProps {
   children: JSX.Element,
@@ -18,41 +38,39 @@ export interface ProviderProps {
 export function GlobalProvider({ children }: ProviderProps): JSX.Element {
   const [congestions, dispatch] = useReducer(Reducer, [])
   const [showModal, setShowModal] = useState(false)
+  const [center, setCenter] = useState<LatLng>({latitude: 33.8568, longitude: 151.2153});
+  const [radius, setRadius] = useState<number>(1);
 
   //data from homepage and refine search
-  // TODO RM: Update type after discussion with Ahmad
-  async function handleSearch(data: any) {
-    console.log('running');
-    // console.log('POST request to backend the following data: ', data)
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    }
+  async function handleSearch(data: CongestionQuery) {
+    fetch(`/stations?longitude=${data.longitude}&latitude=${data.latitude}&radius=${data.radius}`)
+      .then((response) => response.json())
+      .then((data) => {
+        const congestionData = data.map((congestion: any) => {
+          return {
+            latitude: congestion.lat,
+            longitude: congestion.lng,
+          };
+        });
+        dispatch({ type: 'ADD_CONGESTION', payload: { data: congestionData } })
+      });
 
-    const res = await axios.post('http://localhost:9000/', data, config)
-
-    console.log(res.data.content)
-    console.log('lol: ', data)
-
-    dispatch({ type: 'ADD_CONGESTION', payload: { data: res.data.content } })
   }
 
   //card dismiss button handler
-  // TODO RM: Update type after discussion with Ahmad
-  function handleDismiss(id: any) {
+  function handleDismiss(id: number) {
     dispatch({ type: 'DISMISS', payload: { id: id } })
   }
 
   //Card view button handler
-  // TODO RM: Update type after discussion with Ahmad
-  function handleView(congestion: any) {
-    setShowModal(congestion)
+  function handleView(congestionQuery: CongestionQuery) {
+    if (congestionQuery) {
+      setShowModal(true);
+    }
   }
 
   //card save button handler
-  // TODO RM: Update type after discussion with Ahmad
-  function handleSaved(id: any) {
+  function handleSaved(id: number) {
     dispatch({ type: 'SAVED', payload: { id: id } })
   }
 
@@ -66,6 +84,10 @@ export function GlobalProvider({ children }: ProviderProps): JSX.Element {
         showModal,
         setShowModal,
         handleSaved,
+        center,
+        setCenter,
+        radius,
+        setRadius,
       }}
     >
       {children}
