@@ -78,3 +78,18 @@
   color: #fff;
   background-color: var(--primary-colour);
 }
+
+.search-input-clear:hover {
+  cursor: pointer;
+}
+
+.search-input-checkout {
+  margin-right: 10px;
+}
+
+.search-form {
+  height: 95vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}

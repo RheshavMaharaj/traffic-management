@@ -12,7 +12,7 @@ header {
 /* hero */
 .section-hero {
   background-color: var(--secondary-colour);
-  background-image: url('../imgs/landing-bg.png');
+  background-image: url("../imgs/landing-bg.png");
   background-repeat: no-repeat;
   background-size: 100vw 100vh;
 }
@@ -142,8 +142,7 @@ header {
   gap: 1rem;
 }
 
-.view-congestion-map:link,
-.view-congestion-map:visited {
+.view-congestion-map {
   text-decoration: none;
   color: var(--primary-colour);
   border: 2px solid var(--primary-colour);
@@ -152,15 +151,15 @@ header {
   font-size: 1rem;
   justify-self: start;
   transition: 0.5s;
+  background: none;
 }
 
-.view-congestion-map:hover,
-.view-congestion-map:active {
+.view-congestion-map:hover {
   color: #fff;
   background-color: var(--primary-colour);
 }
 
-.search-filter-item input[type='range'] {
+.search-filter-item input[type="range"] {
   color: #6c48f4;
 }
 
@@ -171,4 +170,8 @@ footer .container {
   display: flex;
   justify-content: space-between;
   color: #fff;
+}
+
+.combobox-input {
+  width: 100%;
 }
