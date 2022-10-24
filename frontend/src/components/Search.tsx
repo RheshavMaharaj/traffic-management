@@ -110,6 +110,9 @@ const Search = () => {
               <label>
                 <input
                   type="range"
+                  min="1"
+                  max="10"
+                  step="1"
                   value={searchRadius}
                   onChange={(e) => setSearchRadius(parseInt(e.target.value))}
                 />
@@ -122,6 +125,9 @@ const Search = () => {
               <label>
                 <input
                   type="range"
+                  min="0"
+                  max="9"
+                  step="1"
                   value={populationDensity}
                   onChange={(e) => setPopulationDensity(parseInt(e.target.value))}
                 />
@@ -134,6 +140,9 @@ const Search = () => {
               <label>
                 <input
                   type="range"
+                  min="0"
+                  max="8"
+                  step="1"
                   value={timeOfDay}
                   onChange={(e) => SetTimeOfDay(parseInt(e.target.value))}
                 />

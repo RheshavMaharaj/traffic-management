@@ -27,13 +27,13 @@ const Card = ({ congestion }: CardProps) => {
           {/* {congestion.issues.map((issue, index) => (
             <p key={index}>{issue}</p>
           ))} */}
-          <p>This is an issue</p>
+          <p>Major traffic congestions detected</p>
         </div>
         <div className="card-body-sc">
           <div className="card-body-sc-s">
             <h5>Severity</h5>
             {/* <p>{congestion.severity}</p> */}
-            <p>Severity not available</p>
+            <p>High Severity</p>
           </div>
           <div className="card-body-sc-c">
             <h5>Confidence</h5>
@@ -43,6 +43,7 @@ const Card = ({ congestion }: CardProps) => {
               }}
             >
               {congestion.threshold}
+              96%
             </p>
           </div>
         </div>

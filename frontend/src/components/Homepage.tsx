@@ -149,8 +149,8 @@ const Homepage = () => {
                     </label>
                     <input
                       type="range"
-                      min="1"
-                      max="3"
+                      min="0"
+                      max="9"
                       step="1"
                       value={populationDensity}
                       onChange={(e) => setPopulationDensity(parseInt(e.target.value))}
@@ -160,8 +160,8 @@ const Homepage = () => {
                     <label htmlFor="time-of-day">Time of Day</label>
                     <input
                       type="range"
-                      min="1"
-                      max="9"
+                      min="0"
+                      max="8"
                       step="1"
                       value={timeOfDay}
                       onChange={(e) => SetTimeOfDay(parseInt(e.target.value))}
@@ -211,6 +211,7 @@ const Homepage = () => {
 
                 <input
                   type="submit"
+                  style={{'borderRadius': 15, 'height': 50, 'width': 200, 'boxShadow': 'none'}}
                   value={'View Congestion Map'}
                   className="view-congestion-map"
                 />
@@ -260,6 +261,7 @@ const PlacesAutoComplete = ({ setSelected, setCoordinates, setAddress }: PlacesA
     <Combobox onSelect={handleSelect}>
       <ComboboxInput
         value={value}
+        style={{width: 600}}
         onChange={(e) => {
           setValue(e.target.value)
         }}

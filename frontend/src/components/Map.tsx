@@ -6,7 +6,7 @@ import { Congestion, GlobalContext } from "../context/GlobalState";
 
 function Map() {
   const { radius, center, congestions, handleView } = useContext(GlobalContext)
-  const {latitude, longitude} = center;
+  const { latitude, longitude } = center;
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: "AIzaSyBuHjFvheL-aNtEzct67_ZblEegI_xRghk",
   });
@@ -28,20 +28,24 @@ function Map() {
   }
 
   return (
-    <GoogleMap zoom={15} center={{lat: latitude, lng: longitude}} mapContainerClassName="map-container" options={{ styles: mapStyle }}>
+    <GoogleMap zoom={15} center={{ lat: latitude, lng: longitude }} mapContainerClassName="map-container" options={{
+      styles: mapStyle, 
+      minZoom: 13,
+      maxZoom: 17
+    }}>
       {/* <MarkerF position={center} /> */}
       {congestions.map((congestion: Congestion, index: number) => (
-          <MarkerF
-            onClick={() => handleView(congestion)}
-            key={index}
-            position={{
-              lat: congestion.latitude,
-              lng: congestion.longitude,
-            }}
-            icon={{ url: alert, scaledSize: new google.maps.Size(31, 43) }}
-          />
-        ))}
-      <CircleF radius={radius * 1000} center={{lat: latitude, lng: longitude}} options={options} />
+        <MarkerF
+          onClick={() => handleView(congestion)}
+          key={index}
+          position={{
+            lat: congestion.latitude,
+            lng: congestion.longitude,
+          }}
+          icon={{ url: alert, scaledSize: new google.maps.Size(31, 43) }}
+        />
+      ))}
+      <CircleF radius={radius * 1000} center={{ lat: latitude, lng: longitude }} options={options} />
     </GoogleMap>
   )
 }

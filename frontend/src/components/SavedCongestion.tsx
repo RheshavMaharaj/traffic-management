@@ -25,7 +25,7 @@ const SavedCongestion = () => {
                   <Card key={index} congestion={congestion} />
                 )
             )
-          : "No saved congestion teehee"}
+          : "No saved congestions found"}
       </div>
     </div>
   )

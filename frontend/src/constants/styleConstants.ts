@@ -208,5 +208,5 @@ export const mapStyle = [
           "color": "#9e9e9e"
         }
       ]
-    }
+    },
   ];

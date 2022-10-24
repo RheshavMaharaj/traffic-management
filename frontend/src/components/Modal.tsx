@@ -23,23 +23,23 @@ const Modal = ({ congestion }: any) => {
             {/* {congestion.issues.map((issue: any, index: number) => (
               <p key={index}>{issue}</p>
             ))} */}
-            <p>This is a massive issue</p>
+            <p>Detected 4 points of congestion for the given time of day</p>
           </div><div className="modal-severity">
             <h3>Severity</h3>
             {/* <p>{congestion.severity}</p> */}
-            <p>5000% severity pls fix</p>
+            <p>High Severity</p>
           </div><div className="modal-confidence">
             <h3>Confidence</h3>
             {/* <p style={{ color: congestion.confidence >= 90 ? "green" : "orange" }}>
               {congestion.confidence}
             </p> */}
-            <p>50% confident it is wrong</p>
+            <p>96%</p>
           </div><div className="modal-mitigation-advice">
             <h3>Mitigation Advice</h3>
             {/* {congestion.advices.map((advice: any, index: number) => (
               <p key={index}>{advice}</p>
             ))} */}
-            <p>Mitigate with larger roads</p>
+            <p>Mitigation currently unavailable</p>
           </div>
         </>
       )}
