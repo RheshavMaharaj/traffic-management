@@ -1,7 +1,7 @@
 from flask import Flask, request
 import csv
-import model
 import stations
+import congestions
 
 app = Flask(__name__)
 
@@ -9,13 +9,6 @@ app = Flask(__name__)
 @app.route("/")
 def health_check():
   return {"Success": "True"}
-
-@app.route("/stations/daily")
-def get_stations_daily():
-  with open('./datasets/road_traffic_counts_hourly_sample.csv', newline='') as csvfile:
-    reader = csv.DictReader(csvfile)
-    for row in reader:
-      print(row['station_key'], row['daily_total'])
 
 @app.route("/stations", methods=['GET'])
 def get_stations():
@@ -34,19 +27,26 @@ def get_stations():
     close_stations = stations.get_stations(center_point, stations_list, radius)
     return close_stations
 
-@app.route('/classify',methods=['POST','GET'])
-def classify_type():
-    try:
-        sepal_len = request.args.get('slen') 
-        sepal_wid = request.args.get('swid') 
-        petal_len = request.args.get('plen') 
-        petal_wid = request.args.get('pwid') 
+@app.route("/predict", methods=['GET'])
+def get_congested_stations():
+  args = request.args
+  latitude = args.get('latitude')
+  longitude = args.get('longitude')
+  radius = args.get('radius')
+  population = args.get('population')
+  time= args.get('time')
 
-        variety = model.classify(sepal_len, sepal_wid, petal_len, petal_wid)
+  with open('./datasets/FINAL_DATASET.csv', newline='') as csvfile:
+    reader = csv.DictReader(csvfile)
+    traffic_data = list(reader)
 
-        return {'Result': variety}
-    except:
-        return 'Error'
+    center_point = [{ 'lat': float(latitude), 'lng': float(longitude) }]
+    radius = float(radius)
+    population = int(population)
+    time = int(time)
+
+    congested_stations = congestions.get_congested_stations(center_point, traffic_data, radius, population, time)
+    return congested_stations
 
 
 

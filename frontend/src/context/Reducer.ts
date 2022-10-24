@@ -6,7 +6,7 @@ export default function Reducer(congestions: any, action: any) {
 
     case 'DISMISS':
       return congestions.filter(
-        (congestion: any) => congestion.id !== action.payload.id
+        (congestion: any) => congestion.stationKey !== action.payload.id
       )
 
     case 'SAVED':

@@ -57,6 +57,8 @@ const Homepage = () => {
           latitude: coordinates?.latitude,
           longitude: coordinates?.longitude,
           radius: searchRadius,
+          population: populationDensity,
+          time: timeOfDay,
         }
       )
       setCenter(coordinates)

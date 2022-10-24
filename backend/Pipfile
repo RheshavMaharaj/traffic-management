@@ -16,6 +16,7 @@ numpy = "*"
 sklearn = "*"
 pandas = "*"
 geopy = "*"
+joblib = "*"
 
 [dev-packages]
 

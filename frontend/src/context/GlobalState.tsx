@@ -11,9 +11,11 @@ export interface Congestion {
   radius: number;
   isSaved: boolean;
   threshold: number;
+  population: number;
+  time: number;
 }
 
-export type CongestionQuery = Pick<Congestion, "latitude" | "longitude" | "radius">; 
+export type CongestionQuery = Pick<Congestion, "latitude" | "longitude" | "radius" | "population" | "time">; 
 
 //global context
 export const GlobalContext = createContext({
@@ -21,13 +23,15 @@ export const GlobalContext = createContext({
   congestions: [] as Congestion[],
   center: {} as LatLng,
   radius: 1,
+  currentCongestion: {} as Congestion | undefined,
   handleSearch: (data: CongestionQuery) => {},
   setShowModal: (status: boolean) => {},
   handleDismiss: (id: number) => {},
-  handleView: (conjestion: CongestionQuery) => {},
+  handleView: (conjestion: Congestion) => {},
   handleSaved: (id: number) => {},
   setCenter: (coords: LatLng) => {},
   setRadius: (radius: number) => {},
+  setCurrentCongestion: (congestion: Congestion) => {},
 })
 
 export interface ProviderProps {
@@ -40,16 +44,19 @@ export function GlobalProvider({ children }: ProviderProps): JSX.Element {
   const [showModal, setShowModal] = useState(false)
   const [center, setCenter] = useState<LatLng>({latitude: 33.8568, longitude: 151.2153});
   const [radius, setRadius] = useState<number>(1);
+  const [currentCongestion, setCurrentCongestion] = useState<Congestion | undefined>();
 
   //data from homepage and refine search
   async function handleSearch(data: CongestionQuery) {
-    fetch(`/stations?longitude=${data.longitude}&latitude=${data.latitude}&radius=${data.radius}`)
+    fetch(`/predict?longitude=${data.longitude}&latitude=${data.latitude}&radius=${data.radius}&population=${data.population}&time=${data.time}`)
       .then((response) => response.json())
       .then((data) => {
         const congestionData = data.map((congestion: any) => {
           return {
-            latitude: congestion.lat,
-            longitude: congestion.lng,
+            stationKey: congestion.station_key,
+            address: congestion.full_name,
+            latitude: parseFloat(congestion.wgs84_latitude),
+            longitude: parseFloat(congestion.wgs84_longitude),
           };
         });
         dispatch({ type: 'ADD_CONGESTION', payload: { data: congestionData } })
@@ -63,9 +70,10 @@ export function GlobalProvider({ children }: ProviderProps): JSX.Element {
   }
 
   //Card view button handler
-  function handleView(congestionQuery: CongestionQuery) {
-    if (congestionQuery) {
+  function handleView(congestion: Congestion) {
+    if (congestion) {
       setShowModal(true);
+      setCurrentCongestion(congestion);
     }
   }
 
@@ -88,6 +96,8 @@ export function GlobalProvider({ children }: ProviderProps): JSX.Element {
         setCenter,
         radius,
         setRadius,
+        currentCongestion,
+        setCurrentCongestion,
       }}
     >
       {children}

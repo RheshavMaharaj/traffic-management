@@ -11,7 +11,7 @@ function Map() {
     googleMapsApiKey: "AIzaSyBuHjFvheL-aNtEzct67_ZblEegI_xRghk",
   });
 
-  if (!isLoaded) {
+  if (!isLoaded && congestions.length === 0) {
     return (
       <div>
         <h1>Wait mate it's loading...</h1>

@@ -13,8 +13,7 @@ const Modal = ({ congestion }: any) => {
       {congestion && (
         <>
           <div className="modal-title">
-            {/* <h1>{congestion.address}</h1> */}
-            <h1>Sydney Opera House</h1>
+            <h1>{congestion.address}</h1>
             {/* <div className="modal-close">
               <GrClose />
             </div> */}
@@ -23,7 +22,7 @@ const Modal = ({ congestion }: any) => {
             {/* {congestion.issues.map((issue: any, index: number) => (
               <p key={index}>{issue}</p>
             ))} */}
-            <p>Detected 4 points of congestion for the given time of day</p>
+            <p>This station is congested</p>
           </div><div className="modal-severity">
             <h3>Severity</h3>
             {/* <p>{congestion.severity}</p> */}

@@ -17,7 +17,7 @@ const ViewCongestion = () => {
   const [showStar, setShowStar] = useState(false)
   const [showShow, setShowShow] = useState(false)
 
-  const { showModal } = useContext(GlobalContext)
+  const { showModal, currentCongestion } = useContext(GlobalContext)
 
   function showSidebar(e: React.MouseEvent) {
     const target = e.target as HTMLInputElement;
@@ -93,7 +93,7 @@ const ViewCongestion = () => {
         </div>
         <Map />
       </div>
-      {showModal && <Modal congestion={showModal} />}
+      {showModal && <Modal congestion={currentCongestion} />}
     </div>
   )
 }
