@@ -1,0 +1,20 @@
+/******************************* POI *******************************/
+
+.vc-poi {
+  padding: 1rem;
+  background-color: #f7f7f7;
+  height: 100vh;
+  min-width: 25vw;
+  overflow-y: scroll;
+}
+
+.vc-poi h1 {
+  color: var(--primary-colour);
+  margin-bottom: 2rem;
+}
+
+.vc-poi-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}

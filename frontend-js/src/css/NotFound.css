@@ -1,0 +1,29 @@
+.not-found {
+  height: 100vh;
+  background-color: var(--secondary-colour);
+}
+
+.not-found h1 {
+  color: #fff;
+}
+
+.not-found h1 {
+  margin: 15rem 0 5rem 0;
+}
+
+.not-found .primary-btn:link,
+.not-found .primary-btn:visited {
+  text-decoration: none;
+  color: var(--primary-colour);
+  border: 2px solid var(--primary-colour);
+  padding: 0.5rem 1rem;
+  border-radius: 0.6rem;
+  font-size: 1.3rem;
+  transition: 0.5s;
+}
+
+.not-found .primary-btn:hover,
+.not-found .primary-btn:active {
+  color: #fff;
+  background-color: var(--primary-colour);
+}
