@@ -1,17 +1,17 @@
-import logo from '../imgs/logo1.png';
-import '../css/Homepage.css'
-import { Link, useNavigate } from 'react-router-dom'
-import { useContext, useState } from 'react'
-import { GlobalContext } from '../context/GlobalState'
+import logo from "../imgs/logo1.png"
+import "../css/Homepage.css"
+import { Link, useNavigate } from "react-router-dom"
+import { useContext, useState } from "react"
+import { GlobalContext } from "../context/GlobalState"
 // import PlacesAutoComplete from './PlacesAutoComplete'
 //////
 
 // import React, { useMemo, useContext } from 'react'
-import { useLoadScript } from '@react-google-maps/api'
+import { useLoadScript } from "@react-google-maps/api"
 import usePlacesAutocomplete, {
   getGeocode,
   getLatLng,
-} from 'use-places-autocomplete'
+} from "use-places-autocomplete"
 
 import {
   Combobox,
@@ -19,26 +19,26 @@ import {
   ComboboxPopover,
   ComboboxList,
   ComboboxOption,
-} from '@reach/combobox'
-import '@reach/combobox/styles.css'
+} from "@reach/combobox"
+import "@reach/combobox/styles.css"
 
 /////
 
 export interface LatLng {
-  latitude: number;
-  longitude: number;
+  latitude: number
+  longitude: number
 }
 
 const Homepage = () => {
   let nagivate = useNavigate()
 
   function routeChange() {
-    nagivate('/view_congestion')
+    nagivate("/view_congestion")
   }
   const { handleSearch, setCenter, setRadius } = useContext(GlobalContext)
 
   // eslint-disable-next-line
-  const [address, setAddress] = useState('15 Broadway, Ultimo NSW 2007')
+  const [address, setAddress] = useState("15 Broadway, Ultimo NSW 2007")
   const [searchRadius, setSearchRadius] = useState(1)
   const [populationDensity, setPopulationDensity] = useState(0)
   const [timeOfDay, SetTimeOfDay] = useState(0)
@@ -46,35 +46,33 @@ const Homepage = () => {
   const [intersections, setIntersections] = useState(false)
   const [speedZones, setSpeedZones] = useState(false)
   const [highways, setHighways] = useState(false)
-  const [coordinates, setCoordinates] = useState<LatLng>();
+  const [coordinates, setCoordinates] = useState<LatLng>()
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
 
     if (coordinates && searchRadius > 0) {
-      handleSearch(
-        {
-          latitude: coordinates?.latitude,
-          longitude: coordinates?.longitude,
-          radius: searchRadius,
-          population: populationDensity,
-          time: timeOfDay,
-        }
-      )
+      handleSearch({
+        latitude: coordinates?.latitude,
+        longitude: coordinates?.longitude,
+        radius: searchRadius,
+        population: populationDensity,
+        time: timeOfDay,
+      })
       setCenter(coordinates)
-      setRadius(searchRadius);
+      setRadius(searchRadius)
       routeChange()
     }
-
   }
 
   // eslint-disable-next-line
-  const [_, setSelected] = useState<{lat: number, lng: number}>();
+  const [_, setSelected] = useState<{ lat: number; lng: number }>()
 
   // TODO: Move this into a useEffect
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: 'AIzaSyBuHjFvheL-aNtEzct67_ZblEegI_xRghk',
-    libraries: ['places'],
+    googleMapsApiKey: "AIzaSyBuHjFvheL-aNtEzct67_ZblEegI_xRghk",
+    libraries: ["places"],
+    region: "au",
   })
 
   if (!isLoaded) {
@@ -90,10 +88,11 @@ const Homepage = () => {
       <div className="container">
         <div className="hero">
           <header>
-            <Link to={'/'} aria-label="openroad logo">
+            <Link to={"/"} aria-label="openroad logo">
               <img src={logo} alt="openroad logo" className="logo" />
             </Link>
           </header>
+
           <h1 className="hero-h1">
             Traffic Congestion Prediction Using Powerful AI
           </h1>
@@ -106,7 +105,7 @@ const Homepage = () => {
               Get Started
             </a>
 
-            <Link to={'/find-out-more'} className="hero-findOutHow">
+            <Link to={"/find-out-more"} className="hero-findOutHow">
               Find out how
             </Link>
           </div>
@@ -142,8 +141,23 @@ const Homepage = () => {
                       max="10"
                       step="1"
                       value={searchRadius}
-                      onChange={(e) => setSearchRadius(parseInt(e.target.value))}
+                      onChange={(e) =>
+                        setSearchRadius(parseInt(e.target.value))
+                      }
+                      list="tickmarksRadius"
                     />
+                    <datalist id="tickmarks2">
+                      <option value="1" label="1"></option>
+                      <option value="2" label="2"></option>
+                      <option value="3" label="3"></option>
+                      <option value="4" label="4"></option>
+                      <option value="5" label="5"></option>
+                      <option value="6" label="6"></option>
+                      <option value="7" label="7"></option>
+                      <option value="8" label="8"></option>
+                      <option value="9" label="9"></option>
+                      <option value="10" label="10"></option>
+                    </datalist>
                   </div>
                   <div className="search-filter-item">
                     <label htmlFor="population-density">
@@ -155,8 +169,23 @@ const Homepage = () => {
                       max="9"
                       step="1"
                       value={populationDensity}
-                      onChange={(e) => setPopulationDensity(parseInt(e.target.value))}
+                      onChange={(e) =>
+                        setPopulationDensity(parseInt(e.target.value))
+                      }
+                      list="tickmarksPopulation"
                     />
+                    <datalist id="tickmarksPopulation">
+                      <option value="0" label="Low"></option>
+                      <option value="1" label=""></option>
+                      <option value="2" label=""></option>
+                      <option value="3" label=""></option>
+                      <option value="4" label="Medium"></option>
+                      <option value="5" label=""></option>
+                      <option value="6" label=""></option>
+                      <option value="7" label=""></option>
+                      <option value="8" label=""></option>
+                      <option value="9" label="High"></option>
+                    </datalist>
                   </div>
                   <div className="search-filter-item">
                     <label htmlFor="time-of-day">Time of Day</label>
@@ -167,7 +196,19 @@ const Homepage = () => {
                       step="1"
                       value={timeOfDay}
                       onChange={(e) => SetTimeOfDay(parseInt(e.target.value))}
+                      list="tickmarksTime"
                     />
+                    <datalist id="tickmarksTime">
+                      <option value="0" label="0"></option>
+                      <option value="1" label="1"></option>
+                      <option value="2" label="2"></option>
+                      <option value="3" label="3"></option>
+                      <option value="4" label="4"></option>
+                      <option value="5" label="5"></option>
+                      <option value="6" label="6"></option>
+                      <option value="7" label="7"></option>
+                      <option value="8" label="8"></option>
+                    </datalist>
                   </div>
                 </div>
 
@@ -178,7 +219,7 @@ const Homepage = () => {
                   <div className="search-sidebar-item">
                     <input
                       type="checkbox"
-                      value={all ? 'Yes' : 'No'}
+                      value={all ? "Yes" : "No"}
                       onChange={(e) => setAll(e.currentTarget.checked)}
                     />
                     <label htmlFor="all">All</label>
@@ -186,7 +227,7 @@ const Homepage = () => {
                   <div className="search-sidebar-item">
                     <input
                       type="checkbox"
-                      value={intersections ? 'Yes' : 'No'}
+                      value={intersections ? "Yes" : "No"}
                       onChange={(e) =>
                         setIntersections(e.currentTarget.checked)
                       }
@@ -196,7 +237,7 @@ const Homepage = () => {
                   <div className="search-sidebar-item">
                     <input
                       type="checkbox"
-                      value={speedZones ? 'Yes' : 'No'}
+                      value={speedZones ? "Yes" : "No"}
                       onChange={(e) => setSpeedZones(e.currentTarget.checked)}
                     />
                     <label htmlFor="speed-zones">Speed Zones</label>
@@ -204,7 +245,7 @@ const Homepage = () => {
                   <div className="search-sidebar-item">
                     <input
                       type="checkbox"
-                      value={highways ? 'Yes' : 'No'}
+                      value={highways ? "Yes" : "No"}
                       onChange={(e) => setHighways(e.currentTarget.checked)}
                     />
                     <label htmlFor="highways">Highways</label>
@@ -213,8 +254,13 @@ const Homepage = () => {
 
                 <input
                   type="submit"
-                  style={{'borderRadius': 15, 'height': 50, 'width': 200, 'boxShadow': 'none'}}
-                  value={'View Congestion Map'}
+                  // style={{
+                  //   borderRadius: 15,
+                  //   height: 50,
+                  //   width: 200,
+                  //   boxShadow: "none",
+                  // }}
+                  value={"View Congestion Map"}
                   className="view-congestion-map"
                 />
               </div>
@@ -233,12 +279,16 @@ const Homepage = () => {
 }
 
 export interface PlacesAutoCompleteProps {
-  setSelected: (coords: {lat: number, lng: number}) => void;
-  setCoordinates: (coords: LatLng) => void;
-  setAddress: (address: string) => void;
+  setSelected: (coords: { lat: number; lng: number }) => void
+  setCoordinates: (coords: LatLng) => void
+  setAddress: (address: string) => void
 }
 
-const PlacesAutoComplete = ({ setSelected, setCoordinates, setAddress }: PlacesAutoCompleteProps) => {
+const PlacesAutoComplete = ({
+  setSelected,
+  setCoordinates,
+  setAddress,
+}: PlacesAutoCompleteProps) => {
   const {
     ready,
     value,
@@ -254,8 +304,7 @@ const PlacesAutoComplete = ({ setSelected, setCoordinates, setAddress }: PlacesA
 
     const results = await getGeocode({ address })
     const { lat, lng } = await getLatLng(results[0])
-    console.log(lat, ' ', lng)
-    setCoordinates({latitude: lat, longitude: lng});
+    setCoordinates({ latitude: lat, longitude: lng })
     setSelected({ lat, lng })
   }
 
@@ -263,7 +312,7 @@ const PlacesAutoComplete = ({ setSelected, setCoordinates, setAddress }: PlacesA
     <Combobox onSelect={handleSelect}>
       <ComboboxInput
         value={value}
-        style={{width: 600}}
+        // style={{ width: 600 }}
         onChange={(e) => {
           setValue(e.target.value)
         }}
@@ -271,11 +320,15 @@ const PlacesAutoComplete = ({ setSelected, setCoordinates, setAddress }: PlacesA
         className="combobox-input"
         placeholder="15 Broadway, Ultimo NSW 2007"
       />
-      <ComboboxPopover>
-        <ComboboxList>
-          {status === 'OK' &&
+      <ComboboxPopover className="combo-box-popover">
+        <ComboboxList className="combo-box-list">
+          {status === "OK" &&
             data.map(({ place_id, description }) => (
-              <ComboboxOption key={place_id} value={description} />
+              <ComboboxOption
+                key={place_id}
+                value={description}
+                className="combo-box-option"
+              />
             ))}
         </ComboboxList>
       </ComboboxPopover>

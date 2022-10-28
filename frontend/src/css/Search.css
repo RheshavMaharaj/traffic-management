@@ -14,11 +14,15 @@
   color: var(--primary-colour);
 }
 
+.search-input-checkout {
+  margin-right: 1rem;
+}
+
 .vc-search-container {
   display: flex;
   flex-direction: column;
-  gap: 3rem;
-  margin-top: 3rem;
+  gap: 2rem;
+  margin-top: 1rem;
 }
 
 .vc-search-show-container {
@@ -72,6 +76,8 @@
   display: flex;
   align-items: center;
   gap: 2rem;
+  position: absolute;
+  bottom: 1rem;
 }
 
 .vc-search-refine:hover {

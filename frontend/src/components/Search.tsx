@@ -1,16 +1,16 @@
-import { TiDeleteOutline } from 'react-icons/ti'
-import '../css/Search.css'
-import { useState, useContext } from 'react'
-import { GlobalContext } from '../context/GlobalState'
+import { TiDeleteOutline } from "react-icons/ti"
+import "../css/Search.css"
+import { useState, useContext } from "react"
+import { GlobalContext } from "../context/GlobalState"
 
 //////
 
 // import React, { useMemo, useContext } from 'react'
-import { useLoadScript } from '@react-google-maps/api'
+import { useLoadScript } from "@react-google-maps/api"
 import usePlacesAutocomplete, {
   getGeocode,
   getLatLng,
-} from 'use-places-autocomplete'
+} from "use-places-autocomplete"
 
 import {
   Combobox,
@@ -18,9 +18,9 @@ import {
   ComboboxPopover,
   ComboboxList,
   ComboboxOption,
-} from '@reach/combobox'
-import '@reach/combobox/styles.css'
-import { LatLng } from './Homepage'
+} from "@reach/combobox"
+import "@reach/combobox/styles.css"
+import { LatLng } from "./Homepage"
 
 /////
 
@@ -28,7 +28,7 @@ const Search = () => {
   const { handleSearch, setCenter, setRadius } = useContext(GlobalContext)
 
   // eslint-disable-next-line
-  const [address, setAddress] = useState('15 Broadway, Ultimo NSW 2007')
+  const [address, setAddress] = useState("15 Broadway, Ultimo NSW 2007")
   const [searchRadius, setSearchRadius] = useState(1)
   const [populationDensity, setPopulationDensity] = useState(0)
   const [timeOfDay, SetTimeOfDay] = useState(0)
@@ -36,34 +36,30 @@ const Search = () => {
   const [intersections, setIntersections] = useState(false)
   const [speedZones, setSpeedZones] = useState(false)
   const [highways, setHighways] = useState(false)
-  const [coordinates, setCoordinates] = useState<LatLng>();
+  const [coordinates, setCoordinates] = useState<LatLng>()
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
 
     if (coordinates && searchRadius > 0) {
-      handleSearch(
-        {
-          latitude: coordinates?.latitude,
-          longitude: coordinates?.longitude,
-          radius: searchRadius,
-          population: populationDensity,
-          time: timeOfDay,
-        }
-      )
-      setCenter(coordinates);
-      setRadius(searchRadius);
+      handleSearch({
+        latitude: coordinates?.latitude,
+        longitude: coordinates?.longitude,
+        radius: searchRadius,
+        population: populationDensity,
+        time: timeOfDay,
+      })
+      setCenter(coordinates)
+      setRadius(searchRadius)
     }
-
   }
 
-
   // eslint-disable-next-line
-  const [_, setSelected] = useState<{lat: number, lng: number}>();
+  const [_, setSelected] = useState<{ lat: number; lng: number }>()
 
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: 'AIzaSyBuHjFvheL-aNtEzct67_ZblEegI_xRghk',
-    libraries: ['places'],
+    googleMapsApiKey: "AIzaSyBuHjFvheL-aNtEzct67_ZblEegI_xRghk",
+    libraries: ["places"],
   })
 
   if (!isLoaded) {
@@ -77,9 +73,9 @@ const Search = () => {
   return (
     <div className="vc-search">
       <div>
+        <h1>Search</h1>
         <form className="search-form" onSubmit={handleSubmit}>
           <div className="vc-search-container">
-            <h1>Search</h1>
             <div className="vc-search-items vc-search-poi">
               <h3 className="search-title">Point of Interest</h3>
               <label>
@@ -90,7 +86,7 @@ const Search = () => {
                   className="vc-search-input"
                   required
                 /> */}
-                <div style={{ width: '100%' }}>
+                <div style={{ width: "100%" }}>
                   <PlacesAutoComplete
                     setSelected={setSelected}
                     setCoordinates={setCoordinates}
@@ -101,7 +97,7 @@ const Search = () => {
                 <span className="search-input-clear">
                   <TiDeleteOutline
                     size="1.5em"
-                    onClick={() => setAddress('')}
+                    onClick={() => setAddress("")}
                   />
                 </span>
               </label>
@@ -131,7 +127,9 @@ const Search = () => {
                   max="9"
                   step="1"
                   value={populationDensity}
-                  onChange={(e) => setPopulationDensity(parseInt(e.target.value))}
+                  onChange={(e) =>
+                    setPopulationDensity(parseInt(e.target.value))
+                  }
                 />
                 <span>Low</span>
               </label>
@@ -159,7 +157,7 @@ const Search = () => {
                   <input
                     className="search-input-checkout"
                     type="checkbox"
-                    value={all ? 'Yes' : 'No'}
+                    value={all ? "Yes" : "No"}
                     onChange={(e) => setAll(e.currentTarget.checked)}
                   />
                   All
@@ -168,7 +166,7 @@ const Search = () => {
                   <input
                     className="search-input-checkout"
                     type="checkbox"
-                    value={intersections ? 'Yes' : 'No'}
+                    value={intersections ? "Yes" : "No"}
                     onChange={(e) => setIntersections(e.currentTarget.checked)}
                   />
                   Intersections
@@ -177,7 +175,7 @@ const Search = () => {
                   <input
                     className="search-input-checkout"
                     type="checkbox"
-                    value={speedZones ? 'Yes' : 'No'}
+                    value={speedZones ? "Yes" : "No"}
                     onChange={(e) => setSpeedZones(e.currentTarget.checked)}
                   />
                   Speed Zones
@@ -186,7 +184,7 @@ const Search = () => {
                   <input
                     className="search-input-checkout"
                     type="checkbox"
-                    value={highways ? 'Yes' : 'No'}
+                    value={highways ? "Yes" : "No"}
                     onChange={(e) => setHighways(e.currentTarget.checked)}
                   />
                   Highways
@@ -207,12 +205,16 @@ const Search = () => {
 }
 
 export interface PlacesAutoCompleteProps {
-  setSelected: (coords: {lat: number, lng: number}) => void;
-  setCoordinates: (coords: LatLng) => void;
-  setAddress: (address: string) => void;
+  setSelected: (coords: { lat: number; lng: number }) => void
+  setCoordinates: (coords: LatLng) => void
+  setAddress: (address: string) => void
 }
 
-const PlacesAutoComplete = ({ setSelected, setCoordinates, setAddress }: PlacesAutoCompleteProps) => {
+const PlacesAutoComplete = ({
+  setSelected,
+  setCoordinates,
+  setAddress,
+}: PlacesAutoCompleteProps) => {
   const {
     ready,
     value,
@@ -228,8 +230,8 @@ const PlacesAutoComplete = ({ setSelected, setCoordinates, setAddress }: PlacesA
 
     const results = await getGeocode({ address })
     const { lat, lng } = await getLatLng(results[0])
-    console.log(lat, ' ', lng)
-    setCoordinates({latitude: lat, longitude: lng});
+    console.log(lat, " ", lng)
+    setCoordinates({ latitude: lat, longitude: lng })
     setSelected({ lat, lng })
   }
 
@@ -244,11 +246,15 @@ const PlacesAutoComplete = ({ setSelected, setCoordinates, setAddress }: PlacesA
         className="combobox-input"
         placeholder="15 Broadway, Ultimo NSW 2007"
       />
-      <ComboboxPopover>
-        <ComboboxList>
-          {status === 'OK' &&
+      <ComboboxPopover className="combo-box-popover">
+        <ComboboxList className="combo-box-list">
+          {status === "OK" &&
             data.map(({ place_id, description }) => (
-              <ComboboxOption key={place_id} value={description} />
+              <ComboboxOption
+                key={place_id}
+                value={description}
+                className="combo-box-option"
+              />
             ))}
         </ComboboxList>
       </ComboboxPopover>
