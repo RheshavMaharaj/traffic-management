@@ -242,6 +242,14 @@ option {
   background: linear-gradient(90deg, #d3d3d3 50%);
 }
 
+.slider::-webkit-slider-thumb {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #6c48f4;
+  cursor: pointer;
+}
+
 .slider::-moz-range-thumb {
   width: 15px;
   height: 15px;
