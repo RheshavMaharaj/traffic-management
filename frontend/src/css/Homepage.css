@@ -12,7 +12,7 @@ header {
 /* hero */
 .section-hero {
   background-color: var(--secondary-colour);
-  background-image: url('../imgs/landing-bg.png');
+  background-image: url("../imgs/landing-bg.png");
   background-repeat: no-repeat;
   background-size: 100vw 100vh;
 }
@@ -100,6 +100,32 @@ header {
   border-radius: 0.6rem;
 }
 
+.combobox-input {
+  width: 100%;
+  z-index: 2;
+}
+
+.combo-box-popover {
+  margin-top: 0.5rem;
+  padding: 1rem;
+
+  border-radius: 0.6rem;
+  /* border-bottom-left-radius: 25px;
+  border-bottom-right-radius: 25px; */
+  width: 100%;
+}
+
+.combo-box-list {
+  margin: 5rem;
+}
+
+.combo-box-option {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1rem;
+  /* border-bottom: 1px solid #000; */
+  /* margin: 5rem; */
+}
+
 .search-filter {
   grid-column-start: 1;
   grid-column-end: 3;
@@ -142,8 +168,7 @@ header {
   gap: 1rem;
 }
 
-.view-congestion-map:link,
-.view-congestion-map:visited {
+.view-congestion-map {
   text-decoration: none;
   color: var(--primary-colour);
   border: 2px solid var(--primary-colour);
@@ -152,15 +177,15 @@ header {
   font-size: 1rem;
   justify-self: start;
   transition: 0.5s;
+  background: none;
 }
 
-.view-congestion-map:hover,
-.view-congestion-map:active {
+.view-congestion-map:hover {
   color: #fff;
   background-color: var(--primary-colour);
 }
 
-.search-filter-item input[type='range'] {
+.search-filter-item input[type="range"] {
   color: #6c48f4;
 }
 
@@ -172,3 +197,22 @@ footer .container {
   justify-content: space-between;
   color: #fff;
 }
+
+/* ////////// */
+
+datalist {
+  display: flex;
+  /* flex-direction: column; */
+  justify-content: space-between;
+  /* writing-mode: vertical-lr; */
+  /* width: 200px; */
+}
+
+option {
+  padding-left: 5px;
+}
+
+/* input[type="range"] {
+  width: 200px;
+  margin: 0;
+} */
