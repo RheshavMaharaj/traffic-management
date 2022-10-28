@@ -95,7 +95,7 @@ header {
 
 .search-input input {
   border: none;
-  background-color: #ccc;
+  background-color: #f3f3f3;
   padding: 1rem 2rem;
   border-radius: 0.6rem;
 }
@@ -243,6 +243,8 @@ option {
 }
 
 .slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
   width: 15px;
   height: 15px;
   border-radius: 50%;
