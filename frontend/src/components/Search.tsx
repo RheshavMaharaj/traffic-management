@@ -21,6 +21,7 @@ import {
 } from "@reach/combobox"
 import "@reach/combobox/styles.css"
 import { LatLng } from "./Homepage"
+import { Spinner } from "./Map"
 
 /////
 
@@ -64,8 +65,8 @@ const Search = () => {
 
   if (!isLoaded) {
     return (
-      <div>
-        <h1>loading...</h1>
+      <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%', marginTop: 500}}>
+        <Spinner />
       </div>
     )
   }

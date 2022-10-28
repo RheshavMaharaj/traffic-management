@@ -21,6 +21,7 @@ import {
   ComboboxOption,
 } from "@reach/combobox"
 import "@reach/combobox/styles.css"
+import { Spinner } from "./Map"
 
 /////
 
@@ -77,8 +78,8 @@ const Homepage = () => {
 
   if (!isLoaded) {
     return (
-      <div>
-        <h1>loading...</h1>
+      <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%', marginTop: 500}}>
+        <Spinner />
       </div>
     )
   }
@@ -145,6 +146,7 @@ const Homepage = () => {
                         setSearchRadius(parseInt(e.target.value))
                       }
                       list="tickmarksRadius"
+                      className={`slider slider-50`}
                     />
                     <datalist id="tickmarks2">
                       <option value="1" label="1"></option>
@@ -173,6 +175,7 @@ const Homepage = () => {
                         setPopulationDensity(parseInt(e.target.value))
                       }
                       list="tickmarksPopulation"
+                      className={`slider slider-50`}
                     />
                     <datalist id="tickmarksPopulation">
                       <option value="0" label="Low"></option>
@@ -197,17 +200,18 @@ const Homepage = () => {
                       value={timeOfDay}
                       onChange={(e) => SetTimeOfDay(parseInt(e.target.value))}
                       list="tickmarksTime"
+                      className={`slider slider-50`}
                     />
                     <datalist id="tickmarksTime">
-                      <option value="0" label="0"></option>
-                      <option value="1" label="1"></option>
-                      <option value="2" label="2"></option>
-                      <option value="3" label="3"></option>
-                      <option value="4" label="4"></option>
-                      <option value="5" label="5"></option>
-                      <option value="6" label="6"></option>
-                      <option value="7" label="7"></option>
-                      <option value="8" label="8"></option>
+                      <option value="0" label="5 am"></option>
+                      <option value="1" label="7 am" style={{color: '#6c47f4'}}></option>
+                      <option value="2" label="9 am" style={{color: '#6c47f4'}}></option>
+                      <option value="3" label="11 am" style={{color: '#6c47f4'}}></option>
+                      <option value="4" label="1 pm"></option>
+                      <option value="5" label="3 pm" style={{color: '#6c47f4'}}></option>
+                      <option value="6" label="5 pm" style={{color: '#6c47f4'}}></option>
+                      <option value="7" label="7 pm" style={{color: '#6c47f4'}}></option>
+                      <option value="8" label="9 pm"></option>
                     </datalist>
                   </div>
                 </div>

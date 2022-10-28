@@ -8,6 +8,9 @@ export default function Reducer(congestions: any, action: any) {
       return congestions.filter(
         (congestion: any) => congestion.stationKey !== action.payload.id
       )
+    
+      case 'DELETE_ALL':
+        return congestions = [];
 
     case 'SAVED':
       const aa = congestions.map((congestion: any) => {

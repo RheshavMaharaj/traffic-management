@@ -24,6 +24,8 @@ export const GlobalContext = createContext({
   center: {} as LatLng,
   radius: 1,
   currentCongestion: {} as Congestion | undefined,
+  loaded: false,
+  setLoaded: (status: boolean) => {},
   handleSearch: (data: CongestionQuery) => {},
   setShowModal: (status: boolean) => {},
   handleDismiss: (id: number) => {},
@@ -45,9 +47,11 @@ export function GlobalProvider({ children }: ProviderProps): JSX.Element {
   const [center, setCenter] = useState<LatLng>({latitude: 33.8568, longitude: 151.2153});
   const [radius, setRadius] = useState<number>(1);
   const [currentCongestion, setCurrentCongestion] = useState<Congestion | undefined>();
+  const [loaded, setLoaded] = useState(false);
 
   //data from homepage and refine search
   async function handleSearch(data: CongestionQuery) {
+    dispatch({ type: 'DELETE_ALL' });
     fetch(`/predict?longitude=${data.longitude}&latitude=${data.latitude}&radius=${data.radius}&population=${data.population}&time=${data.time}`)
       .then((response) => response.json())
       .then((data) => {
@@ -59,7 +63,8 @@ export function GlobalProvider({ children }: ProviderProps): JSX.Element {
             longitude: parseFloat(congestion.wgs84_longitude),
           };
         });
-        dispatch({ type: 'ADD_CONGESTION', payload: { data: congestionData } })
+        dispatch({ type: 'ADD_CONGESTION', payload: { data: congestionData } });
+        setLoaded(true);
       });
 
   }
@@ -85,6 +90,8 @@ export function GlobalProvider({ children }: ProviderProps): JSX.Element {
   return (
     <GlobalContext.Provider
       value={{
+        loaded,
+        setLoaded,
         handleSearch,
         congestions,
         handleDismiss,

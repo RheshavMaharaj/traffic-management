@@ -8,18 +8,21 @@ import {
 import { mapStyle } from "../constants/styleConstants"
 import alert from "../imgs/red-alert-icon.svg"
 import { Congestion, GlobalContext } from "../context/GlobalState"
+import '../css/Map.css'
+
+export const Spinner = () => <div className="loader"></div>;
 
 function Map() {
-  const { radius, center, congestions, handleView } = useContext(GlobalContext)
+  const { radius, center, congestions, handleView, loaded } = useContext(GlobalContext)
   const { latitude, longitude } = center
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: "AIzaSyBuHjFvheL-aNtEzct67_ZblEegI_xRghk",
   })
 
-  if (!isLoaded && congestions.length === 0) {
+  if (!loaded) {
     return (
-      <div>
-        <h1>Wait mate it's loading...</h1>
+      <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', width: '100%'}}>
+        <Spinner />
       </div>
     )
   }
